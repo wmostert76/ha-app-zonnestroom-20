@@ -20,12 +20,13 @@ Home Assistant custom integration for the Zonspaarpot (Power Return Optimizer / 
 
 ## Installation (HACS - custom repository)
 
-1. Open HACS in Home Assistant.
-2. Go to `Integrations` and click the menu (top-right).
-3. Choose `Custom repositories`.
-4. Add this repository URL and set category to `Integration`.
-5. Install `Zonspaarpot 2.0`.
-6. Restart Home Assistant.
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=wmostert76&repository=zonspaarpot-2-0&category=integration)
+
+Or follow these steps:
+1. Install [HACS](https://hacs.xyz/) if you haven't already.
+2. Add this repository as a [custom integration repository](https://hacs.xyz/docs/faq/custom_repositories) in HACS.
+3. Restart Home Assistant.
+4. Add the integration through the Home Assistant configuration flow.
 
 ## Installation (manual)
 
