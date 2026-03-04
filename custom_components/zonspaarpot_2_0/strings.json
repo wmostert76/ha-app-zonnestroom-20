@@ -1,0 +1,81 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Zonspaarpot 2.0",
+        "description": "Verbind met je Zonspaarpot API.",
+        "data": {
+          "host": "Host/IP",
+          "scan_interval": "Update-interval (seconden)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Kan geen verbinding maken",
+      "invalid_api": "Geen geldige Zonspaarpot API gevonden",
+      "unknown": "Onbekende fout"
+    },
+    "abort": {
+      "already_configured": "Deze host is al geconfigureerd"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Zonspaarpot 2.0 opties",
+        "data": {
+          "scan_interval": "Update-interval (seconden)"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "home_consumption": {
+        "name": "Huisverbruik"
+      },
+      "additional_consumption": {
+        "name": "Extra verbruik"
+      },
+      "mode": {
+        "name": "Modus"
+      },
+      "homewizard_consumption": {
+        "name": "HomeWizard verbruik"
+      },
+      "homewizard_charge_percentage": {
+        "name": "HomeWizard laadpercentage"
+      },
+      "p1_status": {
+        "name": "P1 status"
+      },
+      "p1_type": {
+        "name": "P1 type"
+      },
+      "p1_ipaddress": {
+        "name": "P1 IP-adres"
+      },
+      "api_version": {
+        "name": "API versie"
+      }
+    },
+    "binary_sensor": {
+      "cooling": {
+        "name": "Koeling actief"
+      },
+      "homewizard_connected": {
+        "name": "HomeWizard verbonden"
+      }
+    },
+    "select": {
+      "mode_select": {
+        "name": "Modus kiezen"
+      }
+    },
+    "number": {
+      "setload": {
+        "name": "Setload (watt)"
+      }
+    }
+  }
+}
