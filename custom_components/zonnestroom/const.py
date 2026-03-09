@@ -1,9 +1,9 @@
-"""Constants for Zonspaarpot 2.0."""
+"""Constants for Zonnestroom 2.0."""
 
 from datetime import timedelta
 
-DOMAIN = "zonspaarpot_2_0"
-NAME = "Zonspaarpot 2.0"
+DOMAIN = "zonnestroom"
+NAME = "Zonnestroom 2.0"
 
 CONF_HOST = "host"
 CONF_SCAN_INTERVAL = "scan_interval"
@@ -17,5 +17,3 @@ UPDATE_INTERVAL = timedelta(seconds=DEFAULT_SCAN_INTERVAL)
 MODE_OPTIMIZING = "Optimizing"
 MODE_MAXIMUM_LOAD = "Maximum load"
 MODE_API_MODE = "API mode"
-
-MODE_OPTIONS = [MODE_OPTIMIZING, MODE_MAXIMUM_LOAD, MODE_API_MODE]

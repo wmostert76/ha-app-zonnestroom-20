@@ -1,4 +1,4 @@
-"""Number platform for Zonspaarpot 2.0."""
+"""Number platform for Zonnestroom 2.0."""
 
 from __future__ import annotations
 
@@ -7,9 +7,9 @@ from homeassistant.const import UnitOfPower
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
-from . import ZonspaarpotRuntimeData
+from . import ZonnestroomRuntimeData
 from .const import DOMAIN
-from .entity import ZonspaarpotEntity
+from .entity import ZonnestroomEntity
 
 
 async def async_setup_entry(
@@ -18,11 +18,11 @@ async def async_setup_entry(
     async_add_entities: AddConfigEntryEntitiesCallback,
 ) -> None:
     """Set up load target number."""
-    runtime_data: ZonspaarpotRuntimeData = entry.runtime_data
-    async_add_entities([ZonspaarpotSetLoadNumber(runtime_data)])
+    runtime_data: ZonnestroomRuntimeData = entry.runtime_data
+    async_add_entities([ZonnestroomSetLoadNumber(runtime_data)])
 
 
-class ZonspaarpotSetLoadNumber(ZonspaarpotEntity, NumberEntity):
+class ZonnestroomSetLoadNumber(ZonnestroomEntity, NumberEntity):
     """Number entity for /api/v2/setload."""
 
     _attr_name = "Setload (watt)"
@@ -33,7 +33,7 @@ class ZonspaarpotSetLoadNumber(ZonspaarpotEntity, NumberEntity):
     _attr_mode = "box"
     _attr_translation_key = "setload"
 
-    def __init__(self, runtime_data: ZonspaarpotRuntimeData) -> None:
+    def __init__(self, runtime_data: ZonnestroomRuntimeData) -> None:
         super().__init__(runtime_data)
         self._attr_unique_id = f"{DOMAIN}_{self._host}_setload"
 

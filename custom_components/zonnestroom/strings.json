@@ -2,8 +2,8 @@
   "config": {
     "step": {
       "user": {
-        "title": "Zonspaarpot 2.0",
-        "description": "Verbind met je Zonspaarpot API.",
+        "title": "Zonnestroom 2.0",
+        "description": "Verbind met je Zonnestroom API.",
         "data": {
           "host": "Host/IP",
           "scan_interval": "Update-interval (seconden)"
@@ -12,7 +12,7 @@
     },
     "error": {
       "cannot_connect": "Kan geen verbinding maken",
-      "invalid_api": "Geen geldige Zonspaarpot API gevonden",
+      "invalid_api": "Geen geldige Zonnestroom API gevonden",
       "unknown": "Onbekende fout"
     },
     "abort": {
@@ -22,7 +22,7 @@
   "options": {
     "step": {
       "init": {
-        "title": "Zonspaarpot 2.0 opties",
+        "title": "Zonnestroom 2.0 opties",
         "data": {
           "scan_interval": "Update-interval (seconden)"
         }

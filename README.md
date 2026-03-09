@@ -1,45 +1,66 @@
-# Zonspaarpot 2.0
+# Zonnestroom 2.0
 
-Home Assistant custom integration for the Zonspaarpot (Power Return Optimizer / SSM-PRO) local API.
+[![GitHub Release][releases-shield]][releases]
+[![License][license-shield]][license]
+[![Maintainer][maintainer-shield]][maintainer]
+[![Direct Import][direct-import-shield]][direct-import]
 
-## Features
+Zonnestroom 2.0 is een Home Assistant integratie waarmee je jouw zonnestroom-data direct in Home Assistant kunt inladen en gebruiken voor optimalisatie van je energieverbruik.
 
-- Polls local API endpoints:
-  - `GET /api`
-  - `GET /api/v2/config`
-  - `GET /api/v2/actual`
-- Exposes sensors for:
-  - Home consumption
-  - Additional consumption
-  - Active mode
-  - HomeWizard values (if available)
-  - P1 diagnostics
-- Control entities:
-  - Mode select (`Optimizing`, `Maximum load`, `API mode`)
-  - Setload number (`0..2300` watt via `PUT /api/v2/setload`)
+## 🚀 Snelle Installatie
 
-## Installation (HACS - custom repository)
+Klik op de knop hieronder om de repository direct aan jouw Home Assistant instance toe te voegen:
 
-[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=wmostert76&repository=zonspaarpot-2-0&category=integration)
+[![Add to Home Assistant][direct-import-button]][direct-import]
 
-Or follow these steps:
-1. Install [HACS](https://hacs.xyz/) if you haven't already.
-2. Add this repository as a [custom integration repository](https://hacs.xyz/docs/faq/custom_repositories) in HACS.
-3. Restart Home Assistant.
-4. Add the integration through the Home Assistant configuration flow.
+*Let op: Je hebt Home Assistant 2025.11 of nieuwer nodig voor deze functie.*
 
-## Installation (manual)
+## 📖 Inhoudsopgave
+- [Functies](#-functies)
+- [Installatie](#-installatie)
+- [Configuratie](#-configuratie)
+- [Ondersteuning](#-ondersteuning)
+- [Bijdragen](#-bijdragen)
+- [Licentie](#-licentie)
 
-1. Copy `custom_components/zonspaarpot_2_0` to your Home Assistant `custom_components` folder.
-2. Restart Home Assistant.
-3. Add integration: `Settings -> Devices & Services -> Add Integration -> Zonspaarpot 2.0`.
+## ✨ Functies
+- **Directe Data-import**: Real-time inzicht in je zonnestroom-opbrengst.
+- **Geoptimaliseerd voor Energie-dashboard**: Volledig compatibel met het standaard HA Energie-dashboard.
+- **Lokale Polling**: Data blijft binnen jouw eigen netwerk (geen cloud nodig).
+- **Config Flow**: Eenvoudige configuratie via de Home Assistant interface.
 
-## Configuration
+## 🛠 Installatie
 
-- Host/IP: for example `192.168.180.109`
-- Scan interval: in seconds (2..300, default 10)
+### Optie 1: Direct Import (Aanbevolen)
+Klik op de [Add to Home Assistant][direct-import] knop hierboven.
 
-## Notes
+### Optie 2: Handmatige Installatie
+1. Download de [laatste release](https://github.com/wmostert76/ha-app-zonnestroom-20/releases).
+2. Kopieer de map `custom_components/zonnestroom` naar je `/config/custom_components/` map.
+3. Start Home Assistant opnieuw op.
+4. Ga naar **Instellingen > Apparaten & Diensten > Integratie Toevoegen** en zoek naar `Zonnestroom 2.0`.
 
-- The integration uses the device's local HTTP API without authentication.
-- Ensure Home Assistant can reach the device on your LAN.
+## ⚙️ Configuratie
+Na de installatie kun je de integratie configureren door je host-IP van de Zonspaarpot/Zonnestroom module op te geven.
+
+## 💬 Ondersteuning
+Heb je problemen of suggesties? Open dan een [issue](https://github.com/wmostert76/ha-app-zonnestroom-20/issues) of bekijk onze [Wiki](https://github.com/wmostert76/ha-app-zonnestroom-20/wiki).
+
+## 🤝 Bijdragen
+Bijdragen zijn van harte welkom! Lees onze [Contributing Guidelines](CONTRIBUTING.md) en [Code of Conduct](CODE_OF_CONDUCT.md).
+
+## 📄 Licentie
+Gelicenseerd onder de [MIT Licentie](LICENSE).
+
+---
+*Ontwikkeld door [wmostert76](https://github.com/wmostert76).*
+
+[releases-shield]: https://img.shields.io/github/v/release/wmostert76/ha-app-zonnestroom-20?style=for-the-badge
+[releases]: https://github.com/wmostert76/ha-app-zonnestroom-20/releases
+[license-shield]: https://img.shields.io/github/license/wmostert76/ha-app-zonnestroom-20?style=for-the-badge
+[license]: LICENSE
+[maintainer-shield]: https://img.shields.io/badge/MAINTAINER-W.%20MOSTERT-orange?style=for-the-badge
+[maintainer]: https://github.com/wmostert76
+[direct-import-shield]: https://img.shields.io/badge/DIRECT%20IMPORT-TO%20HA-blue?style=for-the-badge
+[direct-import]: https://my.home-assistant.io/redirect/supervisor_add_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fwmostert76%2Fha-app-zonnestroom-20
+[direct-import-button]: https://my.home-assistant.io/badges/supervisor_add_repository.svg

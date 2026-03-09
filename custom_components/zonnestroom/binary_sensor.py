@@ -1,4 +1,4 @@
-"""Binary sensor platform for Zonspaarpot 2.0."""
+"""Binary sensor platform for Zonnestroom 2.0."""
 
 from __future__ import annotations
 
@@ -9,28 +9,28 @@ from homeassistant.const import EntityCategory
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
-from . import ZonspaarpotRuntimeData
+from . import ZonnestroomRuntimeData
 from .const import DOMAIN
-from .entity import ZonspaarpotEntity
+from .entity import ZonnestroomEntity
 
 
 @dataclass(frozen=True, kw_only=True)
-class ZonspaarpotBinarySensorDescription(BinarySensorEntityDescription):
-    """Description for Zonspaarpot binary sensors."""
+class ZonnestroomBinarySensorDescription(BinarySensorEntityDescription):
+    """Description for Zonnestroom binary sensors."""
 
     top_key: str
     nested_key: str
 
 
-BINARY_SENSORS: tuple[ZonspaarpotBinarySensorDescription, ...] = (
-    ZonspaarpotBinarySensorDescription(
+BINARY_SENSORS: tuple[ZonnestroomBinarySensorDescription, ...] = (
+    ZonnestroomBinarySensorDescription(
         key="cooling",
         name="Koeling actief",
         translation_key="cooling",
         top_key="actual",
         nested_key="cooling",
     ),
-    ZonspaarpotBinarySensorDescription(
+    ZonnestroomBinarySensorDescription(
         key="homewizard_connected",
         name="HomeWizard verbonden",
         translation_key="homewizard_connected",
@@ -46,17 +46,17 @@ async def async_setup_entry(
     entry,
     async_add_entities: AddConfigEntryEntitiesCallback,
 ) -> None:
-    """Set up Zonspaarpot binary sensors."""
-    runtime_data: ZonspaarpotRuntimeData = entry.runtime_data
-    async_add_entities([ZonspaarpotBinarySensor(runtime_data, description) for description in BINARY_SENSORS])
+    """Set up Zonnestroom binary sensors."""
+    runtime_data: ZonnestroomRuntimeData = entry.runtime_data
+    async_add_entities([ZonnestroomBinarySensor(runtime_data, description) for description in BINARY_SENSORS])
 
 
-class ZonspaarpotBinarySensor(ZonspaarpotEntity, BinarySensorEntity):
-    """Zonspaarpot binary sensor."""
+class ZonnestroomBinarySensor(ZonnestroomEntity, BinarySensorEntity):
+    """Zonnestroom binary sensor."""
 
-    entity_description: ZonspaarpotBinarySensorDescription
+    entity_description: ZonnestroomBinarySensorDescription
 
-    def __init__(self, runtime_data: ZonspaarpotRuntimeData, description: ZonspaarpotBinarySensorDescription) -> None:
+    def __init__(self, runtime_data: ZonnestroomRuntimeData, description: ZonnestroomBinarySensorDescription) -> None:
         super().__init__(runtime_data)
         self.entity_description = description
         self._attr_unique_id = f"{DOMAIN}_{self._host}_{description.key}"

@@ -1,4 +1,4 @@
-"""Data update coordinator for Zonspaarpot 2.0."""
+"""Data update coordinator for Zonnestroom 2.0."""
 
 from __future__ import annotations
 
@@ -10,13 +10,13 @@ from typing import Any
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
-from .api import ZonspaarpotApiClient, ZonspaarpotApiError
+from .api import ZonnestroomApiClient, ZonnestroomApiError
 from .const import DOMAIN
 _LOGGER = logging.getLogger(__name__)
 
 
 @dataclass
-class ZonspaarpotData:
+class ZonnestroomData:
     """Container for latest API payloads."""
 
     info: dict[str, Any]
@@ -24,13 +24,13 @@ class ZonspaarpotData:
     actual: dict[str, Any]
 
 
-class ZonspaarpotDataUpdateCoordinator(DataUpdateCoordinator[ZonspaarpotData]):
-    """Coordinator for polling Zonspaarpot API."""
+class ZonnestroomDataUpdateCoordinator(DataUpdateCoordinator[ZonnestroomData]):
+    """Coordinator for polling Zonnestroom API."""
 
     def __init__(
         self,
         hass: HomeAssistant,
-        api: ZonspaarpotApiClient,
+        api: ZonnestroomApiClient,
         update_interval: timedelta,
     ) -> None:
         super().__init__(
@@ -41,13 +41,13 @@ class ZonspaarpotDataUpdateCoordinator(DataUpdateCoordinator[ZonspaarpotData]):
         )
         self.api = api
 
-    async def _async_update_data(self) -> ZonspaarpotData:
+    async def _async_update_data(self) -> ZonnestroomData:
         """Fetch data from API."""
         try:
             info = await self.api.async_get_info()
             config = await self.api.async_get_config()
             actual = await self.api.async_get_actual()
-        except ZonspaarpotApiError as err:
+        except ZonnestroomApiError as err:
             raise UpdateFailed(str(err)) from err
 
-        return ZonspaarpotData(info=info, config=config, actual=actual)
+        return ZonnestroomData(info=info, config=config, actual=actual)

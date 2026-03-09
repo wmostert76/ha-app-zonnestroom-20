@@ -1,4 +1,4 @@
-"""Config flow for Zonspaarpot 2.0."""
+"""Config flow for Zonnestroom 2.0."""
 
 from __future__ import annotations
 
@@ -8,12 +8,12 @@ import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
-from .api import ZonspaarpotApiClient, ZonspaarpotApiConnectionError, ZonspaarpotApiError
+from .api import ZonnestroomApiClient, ZonnestroomApiConnectionError, ZonnestroomApiError
 from .const import CONF_HOST, CONF_SCAN_INTERVAL, DEFAULT_HOST, DEFAULT_SCAN_INTERVAL, DOMAIN, NAME
 
 
-class ZonspaarpotConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
-    """Handle a config flow for Zonspaarpot 2.0."""
+class ZonnestroomConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
+    """Handle a config flow for Zonnestroom 2.0."""
 
     VERSION = 1
 
@@ -26,12 +26,12 @@ class ZonspaarpotConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             scan_interval = int(user_input[CONF_SCAN_INTERVAL])
 
             session = async_get_clientsession(self.hass)
-            api = ZonspaarpotApiClient(session, host)
+            api = ZonnestroomApiClient(session, host)
             try:
                 info = await api.async_get_info()
-            except ZonspaarpotApiConnectionError:
+            except ZonnestroomApiConnectionError:
                 errors["base"] = "cannot_connect"
-            except ZonspaarpotApiError:
+            except ZonnestroomApiError:
                 errors["base"] = "invalid_api"
             except Exception:  # noqa: BLE001
                 errors["base"] = "unknown"
@@ -61,11 +61,11 @@ class ZonspaarpotConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     @staticmethod
     def async_get_options_flow(config_entry):
         """Get options flow."""
-        return ZonspaarpotOptionsFlow(config_entry)
+        return ZonnestroomOptionsFlow(config_entry)
 
 
-class ZonspaarpotOptionsFlow(config_entries.OptionsFlow):
-    """Handle Zonspaarpot options."""
+class ZonnestroomOptionsFlow(config_entries.OptionsFlow):
+    """Handle Zonnestroom options."""
 
     def __init__(self, config_entry) -> None:
         self._config_entry = config_entry

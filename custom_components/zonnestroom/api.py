@@ -1,4 +1,4 @@
-"""API client for Zonspaarpot 2.0."""
+"""API client for Zonnestroom 2.0."""
 
 from __future__ import annotations
 
@@ -10,16 +10,16 @@ from aiohttp import ClientError, ClientSession
 from .const import DEFAULT_TIMEOUT
 
 
-class ZonspaarpotApiError(Exception):
+class ZonnestroomApiError(Exception):
     """Base exception for API errors."""
 
 
-class ZonspaarpotApiConnectionError(ZonspaarpotApiError):
+class ZonnestroomApiConnectionError(ZonnestroomApiError):
     """Exception for connection errors."""
 
 
-class ZonspaarpotApiClient:
-    """Small API wrapper for Zonspaarpot endpoints."""
+class ZonnestroomApiClient:
+    """Small API wrapper for Zonnestroom endpoints."""
 
     def __init__(self, session: ClientSession, host: str) -> None:
         self._session = session
@@ -37,12 +37,12 @@ class ZonspaarpotApiClient:
                 async with self._session.request(method, url, json=payload) as response:
                     if response.status >= 400:
                         body = await response.text()
-                        raise ZonspaarpotApiError(f"{method} {path} failed ({response.status}): {body}")
+                        raise ZonnestroomApiError(f"{method} {path} failed ({response.status}): {body}")
                     return await response.json()
         except TimeoutError as err:
-            raise ZonspaarpotApiConnectionError(f"Timeout while calling {method} {path}") from err
+            raise ZonnestroomApiConnectionError(f"Timeout while calling {method} {path}") from err
         except ClientError as err:
-            raise ZonspaarpotApiConnectionError(f"Connection error while calling {method} {path}: {err}") from err
+            raise ZonnestroomApiConnectionError(f"Connection error while calling {method} {path}: {err}") from err
 
     async def async_get_info(self) -> dict[str, Any]:
         """Fetch static product info."""
@@ -84,12 +84,12 @@ class ZonspaarpotApiClient:
                 async with self._session.post(url, data=payload) as response:
                     if response.status >= 400:
                         body = await response.text()
-                        raise ZonspaarpotApiError(
+                        raise ZonnestroomApiError(
                             f"POST /saveconfigload failed ({response.status}): {body}"
                         )
                     await response.read()
         except TimeoutError as err:
-            raise ZonspaarpotApiConnectionError("Timeout while calling POST /saveconfigload") from err
+            raise ZonnestroomApiConnectionError("Timeout while calling POST /saveconfigload") from err
         except ClientError as err:
             try:
                 config = await self.async_get_config()
@@ -101,8 +101,8 @@ class ZonspaarpotApiClient:
                     and int(load.get("sleep", -1)) == sleep
                 ):
                     return
-            except ZonspaarpotApiError:
+            except ZonnestroomApiError:
                 pass
-            raise ZonspaarpotApiConnectionError(
+            raise ZonnestroomApiConnectionError(
                 f"Connection error while calling POST /saveconfigload: {err}"
             ) from err

@@ -1,4 +1,4 @@
-"""Select platform for Zonspaarpot 2.0."""
+"""Select platform for Zonnestroom 2.0."""
 
 from __future__ import annotations
 
@@ -6,9 +6,9 @@ from homeassistant.components.select import SelectEntity
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
-from . import ZonspaarpotRuntimeData
+from . import ZonnestroomRuntimeData
 from .const import DOMAIN, MODE_OPTIONS
-from .entity import ZonspaarpotEntity
+from .entity import ZonnestroomEntity
 
 
 async def async_setup_entry(
@@ -17,18 +17,18 @@ async def async_setup_entry(
     async_add_entities: AddConfigEntryEntitiesCallback,
 ) -> None:
     """Set up mode select."""
-    runtime_data: ZonspaarpotRuntimeData = entry.runtime_data
-    async_add_entities([ZonspaarpotModeSelect(runtime_data)])
+    runtime_data: ZonnestroomRuntimeData = entry.runtime_data
+    async_add_entities([ZonnestroomModeSelect(runtime_data)])
 
 
-class ZonspaarpotModeSelect(ZonspaarpotEntity, SelectEntity):
+class ZonnestroomModeSelect(ZonnestroomEntity, SelectEntity):
     """Select entity for mode changes."""
 
     _attr_name = "Modus kiezen"
     _attr_options = MODE_OPTIONS
     _attr_translation_key = "mode_select"
 
-    def __init__(self, runtime_data: ZonspaarpotRuntimeData) -> None:
+    def __init__(self, runtime_data: ZonnestroomRuntimeData) -> None:
         super().__init__(runtime_data)
         self._attr_unique_id = f"{DOMAIN}_{self._host}_mode_select"
 

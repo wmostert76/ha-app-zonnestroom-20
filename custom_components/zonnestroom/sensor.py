@@ -1,4 +1,4 @@
-"""Sensor platform for Zonspaarpot 2.0."""
+"""Sensor platform for Zonnestroom 2.0."""
 
 from __future__ import annotations
 
@@ -10,20 +10,20 @@ from homeassistant.const import EntityCategory, UnitOfPower
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
-from . import ZonspaarpotRuntimeData
+from . import ZonnestroomRuntimeData
 from .const import DOMAIN
-from .entity import ZonspaarpotEntity
+from .entity import ZonnestroomEntity
 
 
 @dataclass(frozen=True, kw_only=True)
-class ZonspaarpotSensorDescription(SensorEntityDescription):
-    """Zonspaarpot sensor description."""
+class ZonnestroomSensorDescription(SensorEntityDescription):
+    """Zonnestroom sensor description."""
 
     value_path: tuple[str, ...]
 
 
-SENSORS: tuple[ZonspaarpotSensorDescription, ...] = (
-    ZonspaarpotSensorDescription(
+SENSORS: tuple[ZonnestroomSensorDescription, ...] = (
+    ZonnestroomSensorDescription(
         key="home_consumption",
         name="Huisverbruik",
         translation_key="home_consumption",
@@ -32,7 +32,7 @@ SENSORS: tuple[ZonspaarpotSensorDescription, ...] = (
         state_class="measurement",
         value_path=("actual", "actual", "home_consumption"),
     ),
-    ZonspaarpotSensorDescription(
+    ZonnestroomSensorDescription(
         key="additional_consumption",
         name="Extra verbruik",
         translation_key="additional_consumption",
@@ -41,13 +41,13 @@ SENSORS: tuple[ZonspaarpotSensorDescription, ...] = (
         state_class="measurement",
         value_path=("actual", "actual", "additional_consumption"),
     ),
-    ZonspaarpotSensorDescription(
+    ZonnestroomSensorDescription(
         key="mode",
         name="Actieve modus",
         translation_key="mode",
         value_path=("actual", "actual", "mode"),
     ),
-    ZonspaarpotSensorDescription(
+    ZonnestroomSensorDescription(
         key="homewizard_consumption",
         name="HomeWizard verbruik",
         translation_key="homewizard_consumption",
@@ -56,7 +56,7 @@ SENSORS: tuple[ZonspaarpotSensorDescription, ...] = (
         state_class="measurement",
         value_path=("actual", "homewizard_pib", "consumption"),
     ),
-    ZonspaarpotSensorDescription(
+    ZonnestroomSensorDescription(
         key="homewizard_charge_percentage",
         name="HomeWizard laadpercentage",
         translation_key="homewizard_charge_percentage",
@@ -65,28 +65,28 @@ SENSORS: tuple[ZonspaarpotSensorDescription, ...] = (
         state_class="measurement",
         value_path=("actual", "homewizard_pib", "charge_percentage"),
     ),
-    ZonspaarpotSensorDescription(
+    ZonnestroomSensorDescription(
         key="p1_status",
         name="P1 status",
         translation_key="p1_status",
         entity_category=EntityCategory.DIAGNOSTIC,
         value_path=("config", "p1_meter", "status"),
     ),
-    ZonspaarpotSensorDescription(
+    ZonnestroomSensorDescription(
         key="p1_type",
         name="P1 type",
         translation_key="p1_type",
         entity_category=EntityCategory.DIAGNOSTIC,
         value_path=("config", "p1_meter", "type"),
     ),
-    ZonspaarpotSensorDescription(
+    ZonnestroomSensorDescription(
         key="p1_ipaddress",
         name="P1 IP-adres",
         translation_key="p1_ipaddress",
         entity_category=EntityCategory.DIAGNOSTIC,
         value_path=("config", "p1_meter", "ipaddress"),
     ),
-    ZonspaarpotSensorDescription(
+    ZonnestroomSensorDescription(
         key="api_version",
         name="API versie",
         translation_key="api_version",
@@ -101,17 +101,17 @@ async def async_setup_entry(
     entry,
     async_add_entities: AddConfigEntryEntitiesCallback,
 ) -> None:
-    """Set up Zonspaarpot sensors."""
-    runtime_data: ZonspaarpotRuntimeData = entry.runtime_data
-    async_add_entities([ZonspaarpotSensor(runtime_data, description) for description in SENSORS])
+    """Set up Zonnestroom sensors."""
+    runtime_data: ZonnestroomRuntimeData = entry.runtime_data
+    async_add_entities([ZonnestroomSensor(runtime_data, description) for description in SENSORS])
 
 
-class ZonspaarpotSensor(ZonspaarpotEntity, SensorEntity):
-    """Representation of a Zonspaarpot sensor."""
+class ZonnestroomSensor(ZonnestroomEntity, SensorEntity):
+    """Representation of a Zonnestroom sensor."""
 
-    entity_description: ZonspaarpotSensorDescription
+    entity_description: ZonnestroomSensorDescription
 
-    def __init__(self, runtime_data: ZonspaarpotRuntimeData, description: ZonspaarpotSensorDescription) -> None:
+    def __init__(self, runtime_data: ZonnestroomRuntimeData, description: ZonnestroomSensorDescription) -> None:
         super().__init__(runtime_data)
         self.entity_description = description
         self._attr_unique_id = f"{DOMAIN}_{self._host}_{description.key}"
