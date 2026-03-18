@@ -51,6 +51,15 @@ jobs:
             echo "exists=false" >> "$GITHUB_OUTPUT"
           fi
 
+      - name: Update manifest version
+        if: steps.check_tag.outputs.exists == 'false'
+        shell: bash
+        run: |
+          version="${{ steps.version.outputs.next }}"
+          version="${version#v}"
+          manifest="custom_components/zonnestroom/manifest.json"
+          sed -i "s/\"version\": \".*\"/\"version\": \"${version}\"/" "$manifest"
+
       - name: Build release notes
         id: notes
         if: steps.check_tag.outputs.exists == 'false'
@@ -67,11 +76,18 @@ jobs:
           fi
           echo "file=$file" >> "$GITHUB_OUTPUT"
 
-      - name: Create and push tag
+      - name: Commit manifest version bump
         if: steps.check_tag.outputs.exists == 'false'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add custom_components/zonnestroom/manifest.json
+          git commit -m "chore: bump version to ${{ steps.version.outputs.next }} [skip release]"
+          git push origin main
+
+      - name: Create and push tag
+        if: steps.check_tag.outputs.exists == 'false'
+        run: |
           git tag "${{ steps.version.outputs.next }}"
           git push origin "${{ steps.version.outputs.next }}"
 
@@ -81,4 +97,3 @@ jobs:
         with:
           tag_name: ${{ steps.version.outputs.next }}
           body_path: ${{ steps.notes.outputs.file }}
-
