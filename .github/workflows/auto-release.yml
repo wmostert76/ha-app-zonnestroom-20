@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+concurrency:
+  group: auto-release
+  cancel-in-progress: false
+
 permissions:
   contents: write
 
@@ -37,8 +41,19 @@ jobs:
           echo "next=$next" >> "$GITHUB_OUTPUT"
           echo "range=$range" >> "$GITHUB_OUTPUT"
 
+      - name: Check if tag already exists
+        id: check_tag
+        shell: bash
+        run: |
+          if git tag -l "${{ steps.version.outputs.next }}" | grep -q .; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Build release notes
         id: notes
+        if: steps.check_tag.outputs.exists == 'false'
         shell: bash
         run: |
           set -euo pipefail
@@ -53,6 +68,7 @@ jobs:
           echo "file=$file" >> "$GITHUB_OUTPUT"
 
       - name: Create and push tag
+        if: steps.check_tag.outputs.exists == 'false'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -60,7 +76,9 @@ jobs:
           git push origin "${{ steps.version.outputs.next }}"
 
       - name: Create GitHub Release
+        if: steps.check_tag.outputs.exists == 'false'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.version.outputs.next }}
           body_path: ${{ steps.notes.outputs.file }}
+
