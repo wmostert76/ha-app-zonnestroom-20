@@ -9,7 +9,7 @@ Zonnestroom 2.0 is een Home Assistant integratie waarmee je jouw zonnestroom-dat
 
 ## 🚀 Snelle Installatie
 
-Klik op de knop hieronder om de repository direct aan jouw Home Assistant instance toe te voegen:
+Klik op de knop hieronder om de repository direct aan jouw Home Assistant instance toe te voegen via HACS:
 
 [![Add to Home Assistant][direct-import-button]][direct-import]
 
@@ -20,7 +20,6 @@ Klik op de knop hieronder om de repository direct aan jouw Home Assistant instan
 - [Installatie](#-installatie)
 - [Configuratie](#-configuratie)
 - [Ondersteuning](#-ondersteuning)
-- [Bijdragen](#-bijdragen)
 - [Licentie](#-licentie)
 
 ## ✨ Functies
@@ -31,7 +30,7 @@ Klik op de knop hieronder om de repository direct aan jouw Home Assistant instan
 
 ## 🛠 Installatie
 
-### Optie 1: Direct Import (Aanbevolen)
+### Optie 1: Direct Import via HACS (Aanbevolen)
 Klik op de [Add to Home Assistant][direct-import] knop hierboven.
 
 ### Optie 2: Handmatige Installatie
@@ -46,9 +45,6 @@ Na de installatie kun je de integratie configureren door je host-IP van de Zonsp
 ## 💬 Ondersteuning
 Heb je problemen of suggesties? Open dan een [issue](https://github.com/wmostert76/ha-app-zonnestroom-20/issues) of bekijk onze [Wiki](https://github.com/wmostert76/ha-app-zonnestroom-20/wiki).
 
-## 🤝 Bijdragen
-Bijdragen zijn van harte welkom! Lees onze [Contributing Guidelines](CONTRIBUTING.md) en [Code of Conduct](CODE_OF_CONDUCT.md).
-
 ## 📄 Licentie
 Gelicenseerd onder de [MIT Licentie](LICENSE).
 
@@ -62,5 +58,6 @@ Gelicenseerd onder de [MIT Licentie](LICENSE).
 [maintainer-shield]: https://img.shields.io/badge/MAINTAINER-W.%20MOSTERT-orange?style=for-the-badge
 [maintainer]: https://github.com/wmostert76
 [direct-import-shield]: https://img.shields.io/badge/DIRECT%20IMPORT-TO%20HA-blue?style=for-the-badge
-[direct-import]: https://my.home-assistant.io/redirect/supervisor_add_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fwmostert76%2Fha-app-zonnestroom-20
-[direct-import-button]: https://my.home-assistant.io/badges/supervisor_add_repository.svg
+[direct-import]: https://my.home-assistant.io/redirect/hacs_repository/?owner=wmostert76&repository=ha-app-zonnestroom-20&category=integration
+[direct-import-button]: https://my.home-assistant.io/badges/hacs_repository.svg
+
