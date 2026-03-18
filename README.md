@@ -43,7 +43,7 @@ Klik op de [Add to Home Assistant][direct-import] knop hierboven.
 Na de installatie kun je de integratie configureren door je host-IP van de Zonspaarpot/Zonnestroom module op te geven.
 
 ## 💬 Ondersteuning
-Heb je problemen of suggesties? Open dan een [issue](https://github.com/wmostert76/ha-app-zonnestroom-20/issues) of bekijk onze [Wiki](https://github.com/wmostert76/ha-app-zonnestroom-20/wiki).
+Heb je problemen of suggesties? Open dan een [issue](https://github.com/wmostert76/ha-app-zonnestroom-20/issues).
 
 ## 📄 Licentie
 Gelicenseerd onder de [MIT Licentie](LICENSE).
