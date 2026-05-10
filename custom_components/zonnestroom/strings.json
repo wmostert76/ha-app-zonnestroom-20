@@ -76,6 +76,11 @@
       "setload": {
         "name": "Setload (watt)"
       }
+    },
+    "text": {
+      "host": {
+        "name": "IP-adres"
+      }
     }
   }
 }
