@@ -1,3 +1,15 @@
+## v2.2.0 - 2026-05-10
+
+## Changes
+
+- Add stable entity unique IDs independent of the configured IP address.
+- Add Home Assistant reconfigure flow for IP address and scan interval.
+- Add force refresh button, API connected binary sensor and extra diagnostics sensors.
+- Add editable load timing controls for wait-after-update, awake and sleep.
+- Add diagnostics support and repair issue when the API is unreachable.
+- Add Dutch and English translations.
+- Update README and release workflow for manual versioned releases.
+
 ## v2.1.0 - 2026-05-10
 
 ## Changes
