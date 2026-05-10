@@ -73,7 +73,6 @@ class ZonnestroomHostText(ZonnestroomEntity, TextEntity):
         self._hass.config_entries.async_update_entry(
             self._entry,
             data=data,
-            unique_id=f"{DOMAIN}_{new_host}",
         )
 
         await self._runtime_data.coordinator.async_request_refresh()

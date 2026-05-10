@@ -12,6 +12,18 @@ from .api import ZonnestroomApiClient, ZonnestroomApiConnectionError, Zonnestroo
 from .const import CONF_HOST, CONF_SCAN_INTERVAL, DEFAULT_HOST, DEFAULT_SCAN_INTERVAL, DOMAIN, NAME
 
 
+def _schema(host: str, scan_interval: int) -> vol.Schema:
+    """Return the host and scan interval schema."""
+    return vol.Schema(
+        {
+            vol.Required(CONF_HOST, default=host): str,
+            vol.Required(CONF_SCAN_INTERVAL, default=scan_interval): vol.All(
+                vol.Coerce(int), vol.Range(min=2, max=300)
+            ),
+        }
+    )
+
+
 class ZonnestroomConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow for Zonnestroom 2.0."""
 
@@ -22,40 +34,69 @@ class ZonnestroomConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         errors: dict[str, str] = {}
 
         if user_input is not None:
-            host = user_input[CONF_HOST].strip()
-            scan_interval = int(user_input[CONF_SCAN_INTERVAL])
-
-            session = async_get_clientsession(self.hass)
-            api = ZonnestroomApiClient(session, host)
-            try:
-                info = await api.async_get_info()
-            except ZonnestroomApiConnectionError:
-                errors["base"] = "cannot_connect"
-            except ZonnestroomApiError:
-                errors["base"] = "invalid_api"
-            except Exception:  # noqa: BLE001
-                errors["base"] = "unknown"
-            else:
+            data, errors = await self._validate_user_input(user_input)
+            if not errors:
+                host = data[CONF_HOST]
                 unique_id = f"{DOMAIN}_{host}"
                 await self.async_set_unique_id(unique_id)
                 self._abort_if_unique_id_configured()
-                return self.async_create_entry(
+                return self.async_create_entry(title=NAME, data=data)
+
+        return self.async_show_form(
+            step_id="user",
+            data_schema=_schema(DEFAULT_HOST, DEFAULT_SCAN_INTERVAL),
+            errors=errors,
+        )
+
+    async def async_step_reconfigure(self, user_input: dict[str, Any] | None = None):
+        """Reconfigure an existing entry."""
+        entry = self._get_reconfigure_entry()
+        errors: dict[str, str] = {}
+        current_scan_interval = int(
+            entry.options.get(
+                CONF_SCAN_INTERVAL,
+                entry.data.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL),
+            )
+        )
+
+        if user_input is not None:
+            data, errors = await self._validate_user_input(user_input)
+            if not errors:
+                return self.async_update_reload_and_abort(
+                    entry,
+                    data_updates=data,
+                    options_updates={CONF_SCAN_INTERVAL: data[CONF_SCAN_INTERVAL]},
                     title=NAME,
-                    data={
-                        CONF_HOST: host,
-                        CONF_SCAN_INTERVAL: scan_interval,
-                    },
+                    reason="reconfigure_successful",
                 )
 
-        schema = vol.Schema(
-            {
-                vol.Required(CONF_HOST, default=DEFAULT_HOST): str,
-                vol.Required(CONF_SCAN_INTERVAL, default=DEFAULT_SCAN_INTERVAL): vol.All(
-                    vol.Coerce(int), vol.Range(min=2, max=300)
-                ),
-            }
+        return self.async_show_form(
+            step_id="reconfigure",
+            data_schema=_schema(entry.data.get(CONF_HOST, DEFAULT_HOST), current_scan_interval),
+            errors=errors,
         )
-        return self.async_show_form(step_id="user", data_schema=schema, errors=errors)
+
+    async def _validate_user_input(
+        self,
+        user_input: dict[str, Any],
+    ) -> tuple[dict[str, Any], dict[str, str]]:
+        """Validate user input and return normalized data."""
+        errors: dict[str, str] = {}
+        host = user_input[CONF_HOST].strip()
+        scan_interval = int(user_input[CONF_SCAN_INTERVAL])
+
+        session = async_get_clientsession(self.hass)
+        api = ZonnestroomApiClient(session, host)
+        try:
+            await api.async_get_info()
+        except ZonnestroomApiConnectionError:
+            errors["base"] = "cannot_connect"
+        except ZonnestroomApiError:
+            errors["base"] = "invalid_api"
+        except Exception:  # noqa: BLE001
+            errors["base"] = "unknown"
+
+        return {CONF_HOST: host, CONF_SCAN_INTERVAL: scan_interval}, errors
 
     @staticmethod
     def async_get_options_flow(config_entry):

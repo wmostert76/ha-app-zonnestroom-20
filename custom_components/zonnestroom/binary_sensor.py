@@ -38,6 +38,14 @@ BINARY_SENSORS: tuple[ZonnestroomBinarySensorDescription, ...] = (
         top_key="homewizard_pib",
         nested_key="connected",
     ),
+    ZonnestroomBinarySensorDescription(
+        key="api_connected",
+        name="API verbonden",
+        translation_key="api_connected",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        top_key="coordinator",
+        nested_key="last_update_success",
+    ),
 )
 
 
@@ -59,11 +67,13 @@ class ZonnestroomBinarySensor(ZonnestroomEntity, BinarySensorEntity):
     def __init__(self, runtime_data: ZonnestroomRuntimeData, description: ZonnestroomBinarySensorDescription) -> None:
         super().__init__(runtime_data)
         self.entity_description = description
-        self._attr_unique_id = f"{DOMAIN}_{self._host}_{description.key}"
+        self._attr_unique_id = f"{DOMAIN}_{runtime_data.entry_id}_{description.key}"
 
     @property
     def is_on(self) -> bool:
         """Return true if binary sensor is on."""
+        if self.entity_description.top_key == "coordinator":
+            return self.coordinator.last_update_success
         if self.entity_description.top_key == "actual":
             data = self.coordinator.data.actual.get("actual", {})
         else:

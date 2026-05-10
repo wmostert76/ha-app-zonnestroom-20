@@ -5,51 +5,73 @@
 [![Maintainer][maintainer-shield]][maintainer]
 [![Direct Import][direct-import-shield]][direct-import]
 
-Zonnestroom 2.0 is een Home Assistant integratie waarmee je jouw zonnestroom-data direct in Home Assistant kunt inladen en gebruiken voor optimalisatie van je energieverbruik.
+Zonnestroom 2.0 is een Home Assistant integratie voor lokale uitlezing en bediening van de Zonnestroom/Zonspaarpot API.
 
-## 🚀 Snelle Installatie
+## Installatie
 
-Klik op de knop hieronder om de repository direct aan jouw Home Assistant instance toe te voegen via HACS:
+### HACS
+
+Klik op de knop hieronder om deze repository aan Home Assistant toe te voegen via HACS:
 
 [![Add to Home Assistant][direct-import-button]][direct-import]
 
-*Let op: Je hebt Home Assistant 2025.11 of nieuwer nodig voor deze functie.*
+Je kunt de repository ook handmatig toevoegen in HACS als custom repository:
 
-## 📖 Inhoudsopgave
-- [Functies](#-functies)
-- [Installatie](#-installatie)
-- [Configuratie](#-configuratie)
-- [Ondersteuning](#-ondersteuning)
-- [Licentie](#-licentie)
+```text
+https://github.com/wmostert76/ha-app-zonnestroom-20
+```
 
-## ✨ Functies
-- **Directe Data-import**: Real-time inzicht in je zonnestroom-opbrengst.
-- **Geoptimaliseerd voor Energie-dashboard**: Volledig compatibel met het standaard HA Energie-dashboard.
-- **Lokale Polling**: Data blijft binnen jouw eigen netwerk (geen cloud nodig).
-- **Config Flow**: Eenvoudige configuratie via de Home Assistant interface.
+Categorie: `Integration`.
 
-## 🛠 Installatie
+### Handmatig
 
-### Optie 1: Direct Import via HACS (Aanbevolen)
-Klik op de [Add to Home Assistant][direct-import] knop hierboven.
+1. Download de laatste release.
+2. Kopieer `custom_components/zonnestroom` naar `/config/custom_components/`.
+3. Herstart Home Assistant.
+4. Ga naar **Instellingen > Apparaten & diensten > Integratie toevoegen** en zoek naar `Zonnestroom 2.0`.
 
-### Optie 2: Handmatige Installatie
-1. Download de [laatste release](https://github.com/wmostert76/ha-app-zonnestroom-20/releases).
-2. Kopieer de map `custom_components/zonnestroom` naar je `/config/custom_components/` map.
-3. Start Home Assistant opnieuw op.
-4. Ga naar **Instellingen > Apparaten & Diensten > Integratie Toevoegen** en zoek naar `Zonnestroom 2.0`.
+## Functies
 
-## ⚙️ Configuratie
-Na de installatie kun je de integratie configureren door je host-IP van de Zonspaarpot/Zonnestroom module op te geven.
+- Lokale polling van de Zonnestroom API.
+- Vermogenssensoren voor huisverbruik, extra verbruik en HomeWizard verbruik.
+- Diagnostische sensoren voor P1, WLAN, HomeWizard PIB en API-versie.
+- Moduskeuze via een select-entity.
+- Bediening voor setload, wait-after-update, awake en sleep.
+- IP-adres direct aanpasbaar via een text-entity onder Bediening.
+- Herconfiguratie via de integratie-instellingen van Home Assistant.
+- Repair-melding wanneer de API niet bereikbaar is.
+- Diagnostics-download voor foutanalyse.
 
-## 💬 Ondersteuning
-Heb je problemen of suggesties? Open dan een [issue](https://github.com/wmostert76/ha-app-zonnestroom-20/issues).
+## Configuratie
 
-## 📄 Licentie
+Tijdens het toevoegen vul je het IP-adres van de Zonnestroom/Zonspaarpot module in. De standaard polling-interval is 10 seconden.
+
+Het IP-adres kan later op twee manieren worden aangepast:
+
+- via **Instellingen > Apparaten & diensten > Zonnestroom 2.0 > Opnieuw configureren**;
+- via de entity `IP-adres` onder Bediening.
+
+Een IP-wijziging via de text-entity wordt direct getest, opgeslagen en zonder herstart doorgevoerd.
+
+## Energie-dashboard
+
+De integratie levert op dit moment vermogenssensoren in watt. Die zijn geschikt voor dashboards, automatiseringen en grafieken. Het standaard Home Assistant Energie-dashboard vraagt normaal om energiesensoren in kWh met lange-termijnstatistiek. Maak daarvoor een aparte integratie- of utility-meter sensor als je deze gegevens in het Energie-dashboard wilt gebruiken.
+
+## Ontwikkeling
+
+Releases gebruiken de versie uit `custom_components/zonnestroom/manifest.json`. HACS ziet een update zodra er een nieuwe GitHub release met een hogere tag beschikbaar is.
+
+## Ondersteuning
+
+Open bij problemen of suggesties een issue:
+
+```text
+https://github.com/wmostert76/ha-app-zonnestroom-20/issues
+```
+
+## Licentie
+
 Gelicenseerd onder de [MIT Licentie](LICENSE).
-
----
-*Ontwikkeld door [wmostert76](https://github.com/wmostert76).*
 
 [releases-shield]: https://img.shields.io/github/v/release/wmostert76/ha-app-zonnestroom-20?style=for-the-badge
 [releases]: https://github.com/wmostert76/ha-app-zonnestroom-20/releases
@@ -60,4 +82,3 @@ Gelicenseerd onder de [MIT Licentie](LICENSE).
 [direct-import-shield]: https://img.shields.io/badge/DIRECT%20IMPORT-TO%20HA-blue?style=for-the-badge
 [direct-import]: https://my.home-assistant.io/redirect/hacs_repository/?owner=wmostert76&repository=ha-app-zonnestroom-20&category=integration
 [direct-import-button]: https://my.home-assistant.io/badges/hacs_repository.svg
-

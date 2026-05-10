@@ -87,6 +87,20 @@ SENSORS: tuple[ZonnestroomSensorDescription, ...] = (
         value_path=("config", "p1_meter", "ipaddress"),
     ),
     ZonnestroomSensorDescription(
+        key="wlan_ipaddress",
+        name="WLAN IP-adres",
+        translation_key="wlan_ipaddress",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        value_path=("config", "wlan", "ipaddress"),
+    ),
+    ZonnestroomSensorDescription(
+        key="homewizard_pib_ipaddress",
+        name="HomeWizard PIB IP-adres",
+        translation_key="homewizard_pib_ipaddress",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        value_path=("config", "homewizard_pib", "ipaddress"),
+    ),
+    ZonnestroomSensorDescription(
         key="api_version",
         name="API versie",
         translation_key="api_version",
@@ -114,7 +128,7 @@ class ZonnestroomSensor(ZonnestroomEntity, SensorEntity):
     def __init__(self, runtime_data: ZonnestroomRuntimeData, description: ZonnestroomSensorDescription) -> None:
         super().__init__(runtime_data)
         self.entity_description = description
-        self._attr_unique_id = f"{DOMAIN}_{self._host}_{description.key}"
+        self._attr_unique_id = f"{DOMAIN}_{runtime_data.entry_id}_{description.key}"
 
     @property
     def native_value(self) -> Any:

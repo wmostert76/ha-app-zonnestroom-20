@@ -3,37 +3,37 @@
     "step": {
       "user": {
         "title": "Zonnestroom 2.0",
-        "description": "Verbind met je Zonnestroom API.",
+        "description": "Connect to your Zonnestroom API.",
         "data": {
           "host": "Host/IP",
-          "scan_interval": "Update-interval (seconden)"
+          "scan_interval": "Update interval (seconds)"
         }
       },
       "reconfigure": {
-        "title": "Zonnestroom 2.0 opnieuw configureren",
-        "description": "Pas het IP-adres en de update-interval aan.",
+        "title": "Reconfigure Zonnestroom 2.0",
+        "description": "Change the IP address and update interval.",
         "data": {
           "host": "Host/IP",
-          "scan_interval": "Update-interval (seconden)"
+          "scan_interval": "Update interval (seconds)"
         }
       }
     },
     "error": {
-      "cannot_connect": "Kan geen verbinding maken",
-      "invalid_api": "Geen geldige Zonnestroom API gevonden",
-      "unknown": "Onbekende fout"
+      "cannot_connect": "Cannot connect",
+      "invalid_api": "No valid Zonnestroom API found",
+      "unknown": "Unknown error"
     },
     "abort": {
-      "already_configured": "Deze host is al geconfigureerd",
-      "reconfigure_successful": "Zonnestroom 2.0 is opnieuw geconfigureerd"
+      "already_configured": "This host is already configured",
+      "reconfigure_successful": "Zonnestroom 2.0 was reconfigured"
     }
   },
   "options": {
     "step": {
       "init": {
-        "title": "Zonnestroom 2.0 opties",
+        "title": "Zonnestroom 2.0 options",
         "data": {
-          "scan_interval": "Update-interval (seconden)"
+          "scan_interval": "Update interval (seconds)"
         }
       }
     }
@@ -41,19 +41,19 @@
   "entity": {
     "sensor": {
       "home_consumption": {
-        "name": "Huisverbruik"
+        "name": "Home consumption"
       },
       "additional_consumption": {
-        "name": "Extra verbruik"
+        "name": "Additional consumption"
       },
       "mode": {
-        "name": "Modus"
+        "name": "Mode"
       },
       "homewizard_consumption": {
-        "name": "HomeWizard verbruik"
+        "name": "HomeWizard consumption"
       },
       "homewizard_charge_percentage": {
-        "name": "HomeWizard laadpercentage"
+        "name": "HomeWizard charge percentage"
       },
       "p1_status": {
         "name": "P1 status"
@@ -62,32 +62,32 @@
         "name": "P1 type"
       },
       "p1_ipaddress": {
-        "name": "P1 IP-adres"
+        "name": "P1 IP address"
       },
       "wlan_ipaddress": {
-        "name": "WLAN IP-adres"
+        "name": "WLAN IP address"
       },
       "homewizard_pib_ipaddress": {
-        "name": "HomeWizard PIB IP-adres"
+        "name": "HomeWizard PIB IP address"
       },
       "api_version": {
-        "name": "API versie"
+        "name": "API version"
       }
     },
     "binary_sensor": {
       "cooling": {
-        "name": "Koeling actief"
+        "name": "Cooling active"
       },
       "homewizard_connected": {
-        "name": "HomeWizard verbonden"
+        "name": "HomeWizard connected"
       },
       "api_connected": {
-        "name": "API verbonden"
+        "name": "API connected"
       }
     },
     "select": {
       "mode_select": {
-        "name": "Modus kiezen"
+        "name": "Mode selector"
       }
     },
     "number": {
@@ -95,7 +95,7 @@
         "name": "Setload (watt)"
       },
       "wait_after_update": {
-        "name": "Wacht na update"
+        "name": "Wait after update"
       },
       "awake": {
         "name": "Awake"
@@ -106,19 +106,19 @@
     },
     "text": {
       "host": {
-        "name": "IP-adres"
+        "name": "IP address"
       }
     },
     "button": {
       "force_refresh": {
-        "name": "Ververs"
+        "name": "Refresh"
       }
     }
   },
   "issues": {
     "cannot_connect": {
-      "title": "Zonnestroom 2.0 is niet bereikbaar",
-      "description": "Home Assistant kan geen verbinding maken met Zonnestroom 2.0 op {host}. Controleer het IP-adres, de stroomvoorziening en je netwerk."
+      "title": "Zonnestroom 2.0 cannot be reached",
+      "description": "Home Assistant cannot connect to Zonnestroom 2.0 at {host}. Check the IP address, power and your network."
     }
   }
 }

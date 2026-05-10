@@ -4,6 +4,20 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Exact version to release, without v prefix"
+        required: false
+      bump:
+        description: "Version bump when version is empty"
+        required: false
+        default: "patch"
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
 
 concurrency:
   group: auto-release
@@ -14,7 +28,7 @@ permissions:
 
 jobs:
   release:
-    if: "!contains(github.event.head_commit.message, '[skip release]')"
+    if: "github.event_name == 'workflow_dispatch' || !contains(github.event.head_commit.message, '[skip release]')"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -28,14 +42,40 @@ jobs:
         run: |
           set -euo pipefail
           latest="$(git tag -l 'v*' --sort=-v:refname | head -n 1)"
-          if [[ -z "$latest" ]]; then
+          requested="${{ github.event.inputs.version }}"
+          bump="${{ github.event.inputs.bump }}"
+
+          if [[ -n "$requested" ]]; then
+            next="v${requested#v}"
+          elif [[ -z "$latest" ]]; then
             next="v1.0.0"
             range=""
           else
             raw="${latest#v}"
             IFS='.' read -r major minor patch <<< "$raw"
-            patch=$((patch + 1))
+            case "${bump:-patch}" in
+              major)
+                major=$((major + 1))
+                minor=0
+                patch=0
+                ;;
+              minor)
+                minor=$((minor + 1))
+                patch=0
+                ;;
+              patch)
+                patch=$((patch + 1))
+                ;;
+              *)
+                echo "Unsupported bump: $bump" >&2
+                exit 1
+                ;;
+            esac
             next="v${major}.${minor}.${patch}"
+          fi
+          if [[ -z "$latest" ]]; then
+            range=""
+          else
             range="${latest}..HEAD"
           fi
           echo "next=$next" >> "$GITHUB_OUTPUT"

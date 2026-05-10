@@ -22,6 +22,7 @@ class ZonnestroomApiClient:
     """Small API wrapper for Zonnestroom endpoints."""
 
     def __init__(self, session: ClientSession, host: str) -> None:
+        self.host = host
         self._session = session
         self._base_url = f"http://{host}"
 

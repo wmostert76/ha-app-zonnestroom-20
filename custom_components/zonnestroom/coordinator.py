@@ -8,10 +8,12 @@ import logging
 from typing import Any
 
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers import issue_registry as ir
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .api import ZonnestroomApiClient, ZonnestroomApiError
 from .const import DOMAIN
+
 _LOGGER = logging.getLogger(__name__)
 
 
@@ -48,6 +50,16 @@ class ZonnestroomDataUpdateCoordinator(DataUpdateCoordinator[ZonnestroomData]):
             config = await self.api.async_get_config()
             actual = await self.api.async_get_actual()
         except ZonnestroomApiError as err:
+            ir.async_create_issue(
+                self.hass,
+                DOMAIN,
+                "cannot_connect",
+                is_fixable=False,
+                severity=ir.IssueSeverity.ERROR,
+                translation_key="cannot_connect",
+                translation_placeholders={"host": self.api.host},
+            )
             raise UpdateFailed(str(err)) from err
 
+        ir.async_delete_issue(self.hass, DOMAIN, "cannot_connect")
         return ZonnestroomData(info=info, config=config, actual=actual)

@@ -30,7 +30,7 @@ class ZonnestroomModeSelect(ZonnestroomEntity, SelectEntity):
 
     def __init__(self, runtime_data: ZonnestroomRuntimeData) -> None:
         super().__init__(runtime_data)
-        self._attr_unique_id = f"{DOMAIN}_{self._host}_mode_select"
+        self._attr_unique_id = f"{DOMAIN}_{runtime_data.entry_id}_mode_select"
 
     @property
     def current_option(self) -> str | None:
