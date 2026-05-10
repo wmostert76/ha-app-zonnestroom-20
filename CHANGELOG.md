@@ -1,3 +1,10 @@
+## v2.1.0 - 2026-05-10
+
+## Changes
+
+- Set the integration config entry title to Zonnestroom 2.0.
+- Release version 2.1.0.
+
 # Changelog
 
 ## 1.0.3
