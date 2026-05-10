@@ -36,12 +36,11 @@ class ZonnestroomConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             except Exception:  # noqa: BLE001
                 errors["base"] = "unknown"
             else:
-                title = info.get("product_name") or NAME
                 unique_id = f"{DOMAIN}_{host}"
                 await self.async_set_unique_id(unique_id)
                 self._abort_if_unique_id_configured()
                 return self.async_create_entry(
-                    title=title,
+                    title=NAME,
                     data={
                         CONF_HOST: host,
                         CONF_SCAN_INTERVAL: scan_interval,
