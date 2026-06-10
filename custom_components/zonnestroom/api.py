@@ -107,3 +107,30 @@ class ZonnestroomApiClient:
             raise ZonnestroomApiConnectionError(
                 f"Connection error while calling POST /saveconfigload: {err}"
             ) from err
+
+    async def async_save_p1_ip_config(self, ip_address: str) -> None:
+        """Persist HomeWizard P1 IP address from the web form endpoint."""
+        url = f"{self._base_url}/saveconfigp1ip"
+        payload = {"ip": ip_address}
+        try:
+            async with asyncio.timeout(DEFAULT_TIMEOUT):
+                async with self._session.post(url, data=payload) as response:
+                    if response.status >= 400:
+                        body = await response.text()
+                        raise ZonnestroomApiError(
+                            f"POST /saveconfigp1ip failed ({response.status}): {body}"
+                        )
+                    await response.read()
+        except TimeoutError as err:
+            raise ZonnestroomApiConnectionError("Timeout while calling POST /saveconfigp1ip") from err
+        except ClientError as err:
+            try:
+                config = await self.async_get_config()
+                p1_meter = config.get("p1_meter", {})
+                if p1_meter.get("ipaddress") == ip_address:
+                    return
+            except ZonnestroomApiError:
+                pass
+            raise ZonnestroomApiConnectionError(
+                f"Connection error while calling POST /saveconfigp1ip: {err}"
+            ) from err
